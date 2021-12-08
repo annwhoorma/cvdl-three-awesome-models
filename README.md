@@ -110,31 +110,40 @@ Finally, to get the required data representation, I've written my own python scr
 
 ## Training YOLOv4
 
-I used tiny-config and Darknet environment to train YOLOv4. As described before, I used Roboflow to convert dataset in Supervisely format to dataset in Darknet format. 
+I used tiny-config and Darknet environment to train YOLOv4. As described before, I used Roboflow to convert dataset in Supervisely format to dataset in Darknet format.
+
 - YOLOv4 trained for 6000 iterations
 - Last accuracy: 79.66%; best accuracy: 83.51%
 - The model saw 360000 images
 - mAP:
-class_id = 0, name = ALU, ap = 70.24%   (TP = 4, FP = 0) 
-class_id = 1, name = PAP, ap = 67.26%   (TP = 5, FP = 3) 
-class_id = 2, name = POL, ap = 100.00%  (TP = 8, FP = 0) 
+
+| CLass Name | Average Precision, % | True Positive (TP) | False Positive (FP) |
+| ---------- | -------------------- | ------------------ | ------------------- |
+| **ALU**    | 70.24                | 4                  | 0                   |
+| **PAP**    | 67.26                | 5                  | 3                   |
+| **POL**    | 100.00               | 8                  | 0                   |
 
 As I wrote before, POL class had the highest number of images and PP recyling code is always associated with 5, whereas PAP and ALU codes could be associated with multiple numbers. Probably that is why mAP for POL class is 100%.
 
-- mAP:
-for conf_thresh = 0.25, precision = 0.85, recall = 0.77, F1-score = 0.81 
-for conf_thresh = 0.25, TP = 17, FP = 3, FN = 5, average IoU = 57.11%
+- Other metrics:
 
-IoU threshold = 50%
-mean average precision (mAP@0.50) = 0.792, or 79.17%
+| Confidence threshold | Precision | Recall | F1-score | TP   | FP   | FN   | average IoU |
+| -------------------- | --------- | ------ | -------- | ---- | ---- | ---- | ----------- |
+| 0.25                 | 0.85      | 0.77   | 0.81     | 17   | 3    | 5    | 57.11%      |
 
-### Results
+### Input
+
+<img src="images/yolov4/yolov4_input.png"/>
+
+### Output
+
+<img src="images/yolov4/yolov4_output.png"/>
 
 ## Training YOLOv5
 
-### Results
+### Output
 
 ## Training MaskRCNN
 
-### Results
+### Output
 
