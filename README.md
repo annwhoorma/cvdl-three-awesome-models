@@ -110,7 +110,23 @@ Finally, to get the required data representation, I've written my own python scr
 
 ## Training YOLOv4
 
-I used tiny-config and Darknet environment to train YOLOv4. As described before, I used Roboflow to convert dataset in Supervisely format to dataset in Darknet format. YOLOv4 was trained for 
+I used tiny-config and Darknet environment to train YOLOv4. As described before, I used Roboflow to convert dataset in Supervisely format to dataset in Darknet format. 
+- YOLOv4 trained for 6000 iterations
+- Last accuracy: 79.66%; best accuracy: 83.51%
+- The model saw 360000 images
+- mAP:
+class_id = 0, name = ALU, ap = 70.24%   (TP = 4, FP = 0) 
+class_id = 1, name = PAP, ap = 67.26%   (TP = 5, FP = 3) 
+class_id = 2, name = POL, ap = 100.00%  (TP = 8, FP = 0) 
+
+As I wrote before, POL class had the highest number of images and PP recyling code is always associated with 5, whereas PAP and ALU codes could be associated with multiple numbers. Probably that is why mAP for POL class is 100%.
+
+- mAP:
+for conf_thresh = 0.25, precision = 0.85, recall = 0.77, F1-score = 0.81 
+for conf_thresh = 0.25, TP = 17, FP = 3, FN = 5, average IoU = 57.11%
+
+IoU threshold = 50%
+mean average precision (mAP@0.50) = 0.792, or 79.17%
 
 ### Results
 
