@@ -1,5 +1,14 @@
 # Three awesome models
+
 Assignment 2 for Computer Vision &amp; Deep Learning course at Innopolis University
+
+## Shortcut: Links to Colab Notebooks
+
+It's highly advised to view the Colab notebook, as GitHub does not display some outputs.
+
+[YOLOv4-tiny](https://colab.research.google.com/drive/1wYGkd6upzia8fPyI-Ft6TA2_ASqCqhou?usp=sharing) |
+[YOLOv5-tiny](https://colab.research.google.com/drive/1t-sz0c1Jal0283zRVZLB_wBa-pdkfeRM?usp=sharing) |
+[MaskRCNN](https://colab.research.google.com/drive/10N_UdY9q9dUKKxfRsnpGJpAbRoeMrIoK?usp=sharing)
 
 ## Project Description
 
@@ -97,7 +106,11 @@ I added augmentations by using supervisely's DTL language to write a config and 
 - Brightness: between -50 and 50
 - Random Color
 
+Finally, to get the required data representation, I've written my own python script that takes a path to dataset and creates two _.json_ files: one for training and one for validation - by default _train.json_ and _valid.json_ respectively.
+
 ## Training YOLOv4
+
+I used tiny-config and Darknet environment to train YOLOv4. As described before, I used Roboflow to convert dataset in Supervisely format to dataset in Darknet format. YOLOv4 was trained for 
 
 ### Results
 
