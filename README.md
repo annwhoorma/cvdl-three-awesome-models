@@ -110,7 +110,7 @@ Finally, to get the required data representation, I've written my own python scr
 
 ## Training YOLOv4
 
-I used tiny-config and Darknet environment to train YOLOv4. As described before, I used Roboflow to convert dataset in Supervisely format to dataset in Darknet format.
+I used tiny-config and Darknet data format to train YOLOv4. As described before, I used Roboflow to convert dataset in Supervisely format to dataset in Darknet format.
 
 - YOLOv4 trained for 6000 iterations
 - Last accuracy: 79.66%; best accuracy: 83.51%
@@ -141,9 +141,53 @@ As I wrote before, POL class had the highest number of images and PP recyling co
 
 ## Training YOLOv5
 
-### Output
+I used tiny-config and pytorch-yolo data format to train YOLOv5. As described before, I used Roboflow to convert dataset in Supervisely format to dataset in yolov5 format.
+
+### Training without initial weights
+
+- YOLOv5 trained for 1400 epochs (early stopping due to small improvement over the last 1000 epochs)
+- Last precision: 86%; Last recall: 47%; Last mAP: 29%;
+
+Maybe if I trained it for even longer, the metrics would increase, but I decided to move on to training with pretrained weights.
+
+#### Prediction on test set (best weights)
+
+First image has a false positive prediction of ALU with confidence over 60%. Second image has a correct prediction. Third image has one correct prediction and two false positives. The last image has no predictions for it. :C
+
+<img src="images/yolov5/prediction.png"/>
+
+### Training with initial weights
+
+- YOLOv5 trained for 1750 epochs (early stopping due to small improvement over the last 1000 epochs)
+- Last precision: 92%; Last recall: 45%; Last mAP: 48%
+
+#### Prediction on test set (best weights)
+
+First and second images do not have any predictions at all. Third and forth have correct predictions.
+
+<img src="images/yolov5/pretrained_prediction.png"/>
+
+### Comparison
+
+| YOLOv5 type       | Precision | Recall | mAP  |
+| ----------------- | --------- | ------ | ---- |
+| YOLOv5            | 86%       | 47%    | 29%  |
+| Pretrained YOLOv5 | 92%       | 45%    | 48%  |
+
+**Orange**: without initial weights
+**Blue**: with initial weights
+
+YOLOv5 with and without pretrained weights showed nearly the same performance, and it's still bad comparing to YOLOv4. Both models showed good results on train set and very bad results on test set. 
+
+<img src="images/yolov5/comparison_metrics.png"/>
+
+### Potential problem
+
+The problem could lie in parameters such as IoU threshold and confidence score. I set condifence score to 0.6 and IoU threshold to 0.45. 
 
 ## Training MaskRCNN
+
+
 
 ### Output
 
