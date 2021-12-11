@@ -12,7 +12,7 @@ It's highly advised to view the Colab notebook, as GitHub does not display some 
 
 ## Project Description
 
-This project is aimed to detect recycling codes: PP (5), PAP (20-22), ALU (41). To achive that, I use three models: YOLOv4, YOLOv5, and MaskRCNN. You can find all Jupyter notebooks and resulting folders at this [google drive folder](https://drive.google.com/drive/folders/1gHMC1etvBosvCI_ABcaIyHHHY1AYIrHd?usp=sharing). I highly advise to view Jupyter from the folder because the ones in GitHub do not display the images from the models' inferences.
+This project is aimed to detect recycling codes: PP (5), PAP (20-22), ALU (41). To achive that, I use three models: YOLOv4, YOLOv5, and MaskRCNN. You can find all Jupyter notebooks and resulting folders at this [Google Drive folder](https://drive.google.com/drive/folders/1gHMC1etvBosvCI_ABcaIyHHHY1AYIrHd?usp=sharing). I highly advise to view Jupyter notebooks from the folder (open them with Google Colab) because the ones in GitHub do not display the images from the models' inferences and tensorboards.
 
 ## Data Acquisition and Annotation
 
@@ -20,11 +20,11 @@ I took photos of whatever I found at home. You can see examples below:
 
 Since I didn't have much of aluminium stuff, the dataset is a bit unbalanced. The statistics is the following:
 
-| Class name | Images count | Objects count |
-| ---------- | ------------ | ------------- |
-| PAP        | 31           | 32            |
-| POL        | 36           | 37            |
-| ALU        | 29           | 29            |
+| Class name     | Images count | Objects count |
+| -------------- | ------------ | ------------- |
+| **PAP**        | 31           | 32            |
+| **POL**        | 36           | 37            |
+| **ALU**        | 29           | 29            |
 
 The numbers in _Objects Count_ column is different from the numbers in _Objects Count_ column because some images contain more than 1 class.
 
