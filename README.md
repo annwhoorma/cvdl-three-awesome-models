@@ -114,6 +114,14 @@ I added augmentations by using supervisely's DTL language to write a config and 
 <img src="images/5_s.png" style="width: 19%;"/>
 </div>
 
+I got the following statistics for this dataset:
+
+| Class name     | Images count | Objects count |
+| -------------- | ------------ | ------------- |
+| **PAP**        | 93           | 96            |
+| **POL**        | 108          | 111           |
+| **ALU**        | 87           | 87            |
+
 Finally, to get the required data representation, I've written my own python script that takes a path to dataset and creates two _.json_ files: one for training and one for validation - by default _train.json_ and _valid.json_ respectively.
 
 ## Training YOLOv4
