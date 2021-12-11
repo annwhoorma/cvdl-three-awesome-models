@@ -4,15 +4,15 @@ Assignment 2 for Computer Vision &amp; Deep Learning course at Innopolis Univers
 
 ## Shortcut: Links to Colab Notebooks
 
-It's highly advised to view the Colab notebook, as GitHub does not display some outputs.
+It's highly advised to view Jupyter Notebooks from Colab because GitHub does not display some outputs.
 
 [YOLOv4-tiny](https://colab.research.google.com/drive/1wYGkd6upzia8fPyI-Ft6TA2_ASqCqhou?usp=sharing) |
 [YOLOv5-tiny](https://colab.research.google.com/drive/1t-sz0c1Jal0283zRVZLB_wBa-pdkfeRM?usp=sharing) |
 [MaskRCNN](https://colab.research.google.com/drive/10N_UdY9q9dUKKxfRsnpGJpAbRoeMrIoK?usp=sharing)
 
-## Project Description
+## Project Idea
 
-This project is aimed to detect recycling codes: PP (5), PAP (20-22), ALU (41). To achive that, I use three models: YOLOv4, YOLOv5, and MaskRCNN. You can find all Jupyter notebooks and resulting folders at this [Google Drive folder](https://drive.google.com/drive/folders/1gHMC1etvBosvCI_ABcaIyHHHY1AYIrHd?usp=sharing). I highly advise to view Jupyter notebooks from the folder (open them with Google Colab) because the ones in GitHub do not display the images from the models' inferences and tensorboards.
+This project is aimed to detect recycling codes: PP (5), PAP (20-22), ALU (41). To achive that, I use three models: YOLOv4, YOLOv5, and MaskRCNN. You can find all Jupyter notebooks and resulting folders at this [Google Drive folder](https://drive.google.com/drive/folders/1gHMC1etvBosvCI_ABcaIyHHHY1AYIrHd?usp=sharing).
 
 ## Data Acquisition and Annotation
 
