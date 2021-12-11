@@ -106,6 +106,14 @@ I added augmentations by using supervisely's DTL language to write a config and 
 - Brightness: between -50 and 50
 - Random Color
 
+<div style="display: flex; align-items: center; justify-content: center;">
+<img src="images/1_s.png" style="width: 19%;"/>
+<img src="images/2_s.png" style="width: 19%;"/>
+<img src="images/3_s.png" style="width: 19%;"/>
+<img src="images/4_s.png" style="width: 19%;"/>
+<img src="images/5_s.png" style="width: 19%;"/>
+</div>
+
 Finally, to get the required data representation, I've written my own python script that takes a path to dataset and creates two _.json_ files: one for training and one for validation - by default _train.json_ and _valid.json_ respectively.
 
 ## Training YOLOv4
@@ -145,8 +153,9 @@ I used tiny-config and pytorch-yolo data format to train YOLOv5. As described be
 
 ### Training without initial weights
 
-- YOLOv5 trained for 1400 epochs (early stopping due to small improvement over the last 1000 epochs)
+- YOLOv5 trained for 1400 epochs (early stopping due to small improvement over the last 1000 epochs);
 - Last precision: 86%; Last recall: 47%; Last mAP: 29%;
+- Reached 1400th epoch after 1hr 40mins - very slow!
 
 Maybe if I trained it for even longer, the metrics would increase, but I decided to move on to training with pretrained weights.
 
@@ -158,8 +167,9 @@ First image has a false positive prediction of ALU with confidence over 60%. Sec
 
 ### Training with initial weights
 
-- YOLOv5 trained for 1750 epochs (early stopping due to small improvement over the last 1000 epochs)
-- Last precision: 92%; Last recall: 45%; Last mAP: 48%
+- YOLOv5 trained for 1750 epochs (early stopping due to small improvement over the last 1000 epochs);
+- Last precision: 92%; Last recall: 45%; Last mAP: 48%;
+- Reached 1400th epoch after 2hr 16mins - very slow!
 
 #### Prediction on test set (best weights)
 
@@ -169,10 +179,10 @@ First and second images do not have any predictions at all. Third and forth have
 
 ### Comparison
 
-| YOLOv5 type       | Precision | Recall | mAP  |
-| ----------------- | --------- | ------ | ---- |
-| YOLOv5            | 86%       | 47%    | 29%  |
-| Pretrained YOLOv5 | 92%       | 45%    | 48%  |
+| YOLOv5 type           | Precision | Recall | mAP  |
+| --------------------- | --------- | ------ | ---- |
+| **YOLOv5**            | 86%       | 47%    | 29%  |
+| **Pretrained YOLOv5** | 92%       | 45%    | 48%  |
 
 **Orange**: without initial weights
 **Blue**: with initial weights
@@ -187,7 +197,59 @@ The problem could lie in parameters such as IoU threshold and confidence score. 
 
 ## Training MaskRCNN
 
+These few lines contain a dense and most important information about configuration for the model:
+1. I use pretrained weights from `COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml`.
+2. Initial learning rate is 0.0002
+3. Number of iterations: 4000.
+4. Decrease learning rate by 0.5 at iterations: 2800, 3600.
+5. Images size is 700x700.
+6. Finished after 58 minutes - very fast!
 
+I have already described the way I augmented and transformed the data for MaskRCNN and visualized it, so just enjoy the statistics and results! :)
+
+## Metrics
+
+### FastRCNN
+
+<div style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+<img src="images/maskrcnn/fastrcnn_metrics1.png" style="width: 60%;"/>
+<img src="images/maskrcnn/fastrcnn_metrics2.png" style="width: 30%;"/>
+</div>
+
+### MaskRCNN
+<div style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+<img src="images/maskrcnn/maskrcnn_metrics1.png" style="width: 60%;"/>
+<img src="images/maskrcnn/maskrcnn_metrics2.png" style="width: 30%;"/>
+</div>
+
+### Final Metrics
+
+Evaluation results for segmentation:
+|   AP   |  AP50   |  AP75   |  APs   |  APm   |  APl   |
+|--------|---------|---------|--------|--------|--------|
+| 89.765 | 100.000 | 100.000 | 85.050 | 90.040 | 94.175 |
+
+Per-category segm AP:
+| Class Name     | AP     |
+|----------------|--------|
+| **PAP**        | 90.644 |
+| **POL**        | 88.651 |
+| **ALU**        | 90.000 |
+
+It is very interesting that here POL does not have the heighest score, as we saw that it has a little bit more smaples than other classes.
 
 ### Output
 
+I am very satisfied with the results! Maybe the augmentation from Supervisely played a role here, but...
+1. The training of MaskRCNN was faster
+2. The results are awesome
+3. The model is confident
+4. The masks are ultra fitting
+
+<div style="display: flex; align-items: center; justify-content: center;">
+<img src="images/maskrcnn/pred1.png" style="width: 19%;"/>
+<img src="images/maskrcnn/pred2.png" style="width: 19%;"/>
+<img src="images/maskrcnn/pred3.png" style="width: 19%;"/>
+<img src="images/maskrcnn/pred4.png" style="width: 19%;"/>
+<img src="images/maskrcnn/pred5.png" style="width: 19%;"/>
+</div>
