@@ -99,7 +99,7 @@ dataset = [{'file_name': 'image1.jpg',
 I added augmentations by using supervisely's DTL language to write a config and run the job. The result of this is a new dataset that has 234 images.
 
 **Augmentations**:
-- Resize: 700x700, keep aspect ration
+- Resize: 700x700, keep aspect ratio
 - Rotate: Between -180° and +180°
 - Gaussian Blur: sigma between 0.5 and 2
 - Contrast: between 0.5 and 2
