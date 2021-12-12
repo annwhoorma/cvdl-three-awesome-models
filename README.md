@@ -131,7 +131,6 @@ I used tiny-config and Darknet data format to train YOLOv4. As described before,
 - YOLOv4 trained for 6000 iterations
 - Last accuracy: 79.66%; best accuracy: 83.51%
 - The model saw 360000 images
-- mAP:
 
 | CLass Name | Average Precision, % | True Positive (TP) | False Positive (FP) |
 | ---------- | -------------------- | ------------------ | ------------------- |
