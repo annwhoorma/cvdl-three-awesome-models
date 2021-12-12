@@ -138,7 +138,7 @@ I used tiny-config and Darknet data format to train YOLOv4. As described before,
 | **PAP**    | 67.26                | 5                  | 3                   |
 | **POL**    | 100.00               | 8                  | 0                   |
 
-As I wrote before, POL class had the highest number of images and PP recyling code is always associated with 5, whereas PAP and ALU codes could be associated with multiple numbers. Probably that is why mAP for POL class is 100%.
+As I wrote before, POL class had the highest number of images and PP recyling code is always associated with 5, whereas PAP and ALU codes could be associated with multiple numbers. Probably that is why AP for POL class is 100%.
 
 - Other metrics:
 
