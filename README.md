@@ -1,6 +1,6 @@
 # Three awesome models
 
-Assignment 2 for Computer Vision &amp; Deep Learning course at Innopolis University
+Assignment 2 for Computer Vision &amp; Deep Learning course at Innopolis University. README contains a very short version of the report which you can by downloading _A2_report.pdf_
 
 ## Shortcut: Links to Colab Notebooks
 
@@ -51,7 +51,7 @@ I used [supervisely](https://app.supervise.ly/) to create polygon-annotations fo
 ## Data Preprocessing and Augmentation
 
 ### For YOLOv4 and YOLOv5
-I used [roboflow](https://roboflow.com/) to augment the dataset, increase its size by 3, and convert polygons to bounding boxes which YOLOs need. The reason to use Roboflow is that YOLOv4 requires data in Darknet format and YOLOv5 requires data in yolov5-pytorch format. Changes in the dataset are the following:
+I used [roboflow](https://roboflow.com/) for data augmentation for YOLOs.
 
 **Preprocessing**
 - Auto-Orient: Applied
@@ -77,28 +77,7 @@ I present the examples of augmentated images below.
 
 ### For MaskRCNN
 
-I used [supervisely](https://app.supervise.ly/) to augment the dataset and increase its size. The reason to use Supervisely is that MaskRCNN requires data in this format (a list of dictionaries created from .json file):
-
-```python
-dataset = [{'file_name': 'image1.jpg',
-            'image_id': ID,
-            'height': H,
-            'width': W,
-            'annotations': [
-                {
-                 'segmentation': [[x_0, y_0, x_1, y_1, ..., x_n, y_n]], 
-                 'bbox': [x_0, y_0, x_1, y_1],
-                 'bbox_mode': BoxMode.XYXY_ABS,
-                 'category_id': 0 },
-                {
-                 'segmentation': [[x_0, y_0, x_1, y_1, ..., x_n, y_n]], 
-                 'bbox': [x_0, y_0, x_1, y_1],
-                 'bbox_mode': BoxMode.XYXY_ABS,
-                 'category_id': 1 }]},
-            ...]
-```
-
-I added augmentations by using supervisely's DTL language to write a config and run the job. The result of this is a new dataset that has 234 images.
+I used [supervisely](https://app.supervise.ly/) to augment the dataset and increase its size. I added augmentations by using supervisely's DTL language to write a config and run the job. The result of this is a new dataset that has 234 images.
 
 **Augmentations**:
 - Resize: 700x700, keep aspect ratio
@@ -124,7 +103,7 @@ I got the following statistics for this dataset:
 | **POL**        | 108          | 111           |
 | **ALU**        | 87           | 87            |
 
-Finally, to get the required data representation, I've written my own python script that takes a path to dataset and creates two _.json_ files: one for training and one for validation - by default _train.json_ and _valid.json_ respectively.
+Finally, to get the required data representation, I've written my own python script _parse_dataset.py_ that takes a path to dataset and creates two _.json_ files: one for training and one for validation - by default _train.json_ and _valid.json_ respectively.
 
 ## Training YOLOv4
 
@@ -142,12 +121,6 @@ I used tiny-config and Darknet data format to train YOLOv4. As described before,
 
 As I wrote before, POL class had the highest number of images and PP recyling code is always associated with 5, whereas PAP and ALU codes could be associated with multiple numbers. Probably that is why AP for POL class is 100%.
 
-- Other metrics:
-
-| Confidence threshold | Precision | Recall | F1-score | TP   | FP   | FN   | average IoU |
-| -------------------- | --------- | ------ | -------- | ---- | ---- | ---- | ----------- |
-| 0.25                 | 0.85      | 0.77   | 0.81     | 17   | 3    | 5    | 57.11%      |
-
 ### Input
 
 <img src="images/yolov4/yolov4_input.png"/>
@@ -156,31 +129,15 @@ As I wrote before, POL class had the highest number of images and PP recyling co
 
 <img src="images/yolov4/yolov4_output.png"/>
 
-## Training YOLOv5
+## Training YOLOv5 with initial weights
 
 I used tiny-config and pytorch-yolo data format to train YOLOv5. As described before, I used Roboflow to convert dataset in Supervisely format to dataset in yolov5 format.
-
-### Training without initial weights
-
-- YOLOv5 trained for 1400 epochs (early stopping due to small improvement over the last 1000 epochs);
-- Last precision: 86%; Last recall: 47%; Last mAP: 29%;
-- Reached 1400th epoch after 1hr 40mins - very slow!
-
-Maybe if I trained it for even longer, the metrics would increase, but I decided to move on to training with pretrained weights.
-
-#### Prediction on test set (best weights)
-
-First image has a false positive prediction of ALU with confidence over 60%. Second image has a correct prediction. Third image has one correct prediction and two false positives. The last image has no predictions for it. :C
-
-<img src="images/yolov5/prediction.png"/>
-
-### Training with initial weights
 
 - YOLOv5 trained for 1750 epochs (early stopping due to small improvement over the last 1000 epochs);
 - Last precision: 92%; Last recall: 45%; Last mAP: 48%;
 - Reached 1400th epoch after 2hr 16mins - very slow!
 
-#### Prediction on test set (best weights)
+### Prediction on test set (best weights)
 
 First and second images do not have any predictions at all. Third and forth have correct predictions.
 
@@ -188,21 +145,13 @@ First and second images do not have any predictions at all. Third and forth have
 
 ### Comparison
 
+I also trained a YOLO without pretrained weights, below you can see a comparison. Both results are frustrating.
+
 | YOLOv5 type           | Precision | Recall | mAP  |
 | --------------------- | --------- | ------ | ---- |
 | **YOLOv5**            | 86%       | 47%    | 29%  |
 | **Pretrained YOLOv5** | 92%       | 45%    | 48%  |
 
-**Orange**: without initial weights
-**Blue**: with initial weights
-
-YOLOv5 with and without pretrained weights showed nearly the same performance, and it's still bad comparing to YOLOv4. Both models showed good results on train set and very bad results on test set. 
-
-<img src="images/yolov5/comparison_metrics.png"/>
-
-### Potential problem
-
-The problem could lie in parameters such as IoU threshold and confidence score. I set condifence score to 0.6 and IoU threshold to 0.45. 
 
 ## Training MaskRCNN
 
@@ -217,21 +166,6 @@ These few lines contain a dense and most important information about configurati
 I have already described the way I augmented and transformed the data for MaskRCNN and visualized it, so just enjoy the statistics and results! :)
 
 ## Metrics
-
-### FastRCNN
-
-<div style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
-<img src="images/maskrcnn/fastrcnn_metrics1.png" style="width: 60%;"/>
-<img src="images/maskrcnn/fastrcnn_metrics2.png" style="width: 30%;"/>
-</div>
-
-### MaskRCNN
-<div style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
-<img src="images/maskrcnn/maskrcnn_metrics1.png" style="width: 60%;"/>
-<img src="images/maskrcnn/maskrcnn_metrics2.png" style="width: 30%;"/>
-</div>
-
-### Final Metrics
 
 Evaluation results for segmentation:
 |   AP   |  AP50   |  AP75   |  APs   |  APm   |  APl   |
